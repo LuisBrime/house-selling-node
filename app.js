@@ -7,6 +7,11 @@ var nunjucks = require("nunjucks");
 
 // ROUTES
 var home = require('./routes/home');
+var houses = require('./routes/houses');
+var persons = require('./routes/persons');
+var register = require('./routes/register');
+var agreements = require('./routes/agreements');
+var sales = require('./routes/sales');
 
 var app = express();
 
@@ -29,6 +34,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Use Routes
 app.use('/', home);
+app.use('/houses', houses);
+app.use('/persons', persons);
+app.use('/register', register);
+app.use('/agreements', agreements);
+app.use('/sales', sales);
+// app.use('/search', search);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

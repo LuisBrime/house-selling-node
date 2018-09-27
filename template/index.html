@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>{{title}}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -19,14 +19,16 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>                        
       </button>
-      <a class="navbar-brand" href="#">Logo</a>
+      <a class="navbar-brand" href="/"><img src="/images/home.png" alt="house" height="17">  House Selling Network</a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Dashboard</a></li>
-        <li><a href="#">Age</a></li>
-        <li><a href="#">Gender</a></li>
-        <li><a href="#">Geo</a></li>
+        <li><a href="/">Historian</a></li>
+        <li><a href="/houses">Houses</a></li>
+        <li><a href="/persons">Persons</a></li>
+        <li><a href="/register">Registered for sale</a></li>
+        <li><a href="/agreements">Agreements</a></li>
+        <li><a href="/sales">Sales</a></li>
       </ul>
     </div>
   </div>
@@ -35,82 +37,117 @@
 <div class="container-fluid">
   <div class="row content">
     <div class="col-sm-3 sidenav hidden-xs">
-      <h2>Logo</h2>
+      <h4>
+        <img src="/images/home.png" alt="house" height="17">  House Selling Network
+        </h4>
       <ul class="nav nav-pills nav-stacked">
-        <li class="active"><a href="#section1">Dashboard</a></li>
-        <li><a href="#section2">Age</a></li>
-        <li><a href="#section3">Gender</a></li>
-        <li><a href="#section3">Geo</a></li>
+        <li><a href="/">Historian</a></li>
+        <li><a href="/houses">Houses</a></li>
+        <li><a href="/persons">Persons</a></li>
+        <li><a href="/register">Registered for sale</a></li>
+        <li><a href="/agreements">Agreements</a></li>
+        <li><a href="/sales">Sales</a></li>
       </ul><br>
+        
+      <div class="input-group">
+        <input type="text" id="se" class="form-control" placeholder="Search Transaction...">
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="button" onclick="">
+                <span class="glyphicon glyphicon-search"></span>
+            </button>  
+        </span>
+      </div>
     </div>
     <br>
     
     <div class="col-sm-9">
+      <h4><small>{{items}}</small></h4>
+      <hr>
+      
+      {% if result %}
       <div class="well">
-        <h4>Dashboard</h4>
-        <p>Some text..</p>
+          <ul class="list-group txns">
+              {% if 'tx' in type %}
+              {% for item in result %}
+                  <li class="list-group-item tX">
+                    <p>Class: {{ item.$class }}</p>
+                    <strong><p>TxnHash: {{ item.transactionId }}</p></strong>
+
+                    {% if item.transactionType %}
+                    <p>Type: {{ item.transactionType }}</p>
+                    {% endif %}
+
+                    {% if item.house %}
+                    <p>House: {{ item.house }}</p>
+                    {% elif item.sA %}
+                    <p>Sales Agreement: {{ item.sA }}</p>
+                    {% endif %}
+
+                    {% if item.timestamp %}
+                    <p>Timestamp: {{ item.timestamp }}</p>
+                    {% elif item.transactionTimestamp %}
+                    <p>Timestamp: {{ item.transactionTimestamp }}</p>
+                    {% endif %}
+                  </li>
+              {% endfor %}
+              
+              {% elif 'asset' in type %}
+              {% for item in result %}
+                  <li class="list-group-item tX">
+                    <p>Class: {{ item.$class }}</p>
+
+                    {% if item.houseId %}
+                    <strong><p>ID: {{ item.houseId }}</p></strong>
+                    {% elif item.salesId %}
+                    <strong><p>ID: {{ item.salesId }}</p></strong>
+                    {% endif %}
+
+                    {% if item.houseAddress %}
+                    <p>Address: {{ item.houseAddress.street }} {{ item.houseAddress.colonia }} </p>
+                    {% endif %}
+
+                    {% if item.price %}
+                    <p>Price: {{ item.price }}</p>
+                    {% endif %}
+
+                    {% if item.info %}
+                    <p>Info: {{ item.info }}</p>
+                    {% endif %}
+
+                    {% if item.onSale %}
+                    <p>On Sale? {{ item.onSale }}</p>
+                    {% endif %}
+
+                    {% if item.owner %}
+                    <p>Owner: {{ item.owner }}</p>
+                    {% elif item.seller %}
+                    <p>Seller: {{ item.seller }}</p>
+                    {% endif %}
+
+                    {% if item.buyer %}
+                    <p>Buyer: {{ item.buyer }}</p>
+                    {% endif %}
+
+                    {% if item.houseInSale %}
+                    <p>House in sale: {{ item.houseInSale }}</p>
+                    {% endif %}
+                  </li>
+              {% endfor %}
+              
+              {% elif 'participant' in type %}
+              {% for item in result %}
+                  <li class="list-group-item tX">
+                    <p>Class: {{ item.$class }}</p>
+                    <p><strong>Email: {{ item.email }}</strong></p>
+                    <p>Name: {{ item.firstName }} {{ item.lastName }}</p>
+                  </li>
+              {% endfor %}
+              
+              {% endif %}
+          </ul>
       </div>
-      <div class="row">
-        <div class="col-sm-3">
-          <div class="well">
-            <h4>Users</h4>
-            <p>1 Million</p> 
-          </div>
-        </div>
-        <div class="col-sm-3">
-          <div class="well">
-            <h4>Pages</h4>
-            <p>100 Million</p> 
-          </div>
-        </div>
-        <div class="col-sm-3">
-          <div class="well">
-            <h4>Sessions</h4>
-            <p>10 Million</p> 
-          </div>
-        </div>
-        <div class="col-sm-3">
-          <div class="well">
-            <h4>Bounce</h4>
-            <p>30%</p> 
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-4">
-          <div class="well">
-            <p>Text</p> 
-            <p>Text</p> 
-            <p>Text</p> 
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="well">
-            <p>Text</p> 
-            <p>Text</p> 
-            <p>Text</p> 
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="well">
-            <p>Text</p> 
-            <p>Text</p> 
-            <p>Text</p> 
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-8">
-          <div class="well">
-            <p>Text</p> 
-          </div>
-        </div>
-        <div class="col-sm-4">
-          <div class="well">
-            <p>Text</p> 
-          </div>
-        </div>
-      </div>
+      {% endif %}
+        
     </div>
   </div>
 </div>
