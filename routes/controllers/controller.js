@@ -183,3 +183,8 @@ exports.getSales = function(req, res) {
         });
     });
 };
+
+exports.searchTransaction = function(req, res) {
+    var txID = req.params.id;
+    // Add code
+}
